@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="controls">
+    <div class="file-input-container">
+        <label class="file-input-label" for="file-input">
+            📁 Выбрать изображение
+        </label>
+        <input accept="image/*" id="file-input" type="file">
+    </div>
+
+    <div class="preview-container">
+        <div id="preview-gallery"></div>
+    </div>
+    <img alt="Следующее изображение" id="floating-image" src="assets/img/home.png" style="position: fixed;">
+    <script>
+    class FloatingImage {
+            constructor() {
+                this.floatingImage = document.getElementById('floating-image');
+                const savedImage = this.getCookie('lastImage');
+                console.log(document.cookie);
+                if (savedImage) {
+                this.floatingImage.src = "assets/img/" + savedImage;
+                }
+                this.fileInput = document.getElementById('file-input');
+                // this.imageOptions = document.querySelectorAll('.image-option');
+                // this.currentImage = '';
+                // this.cookieName = 'lastSelectedImage';
+                // this.cookieExpiryDays = 30;
+                this.init();
+                this.follow = false;
+            }
+
+            setCookie(name, value, days) {
+                const expires = new Date();
+                expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
+                document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
+            }
+
+            getCookie(name) {
+                const nameEQ = name + "=";
+                const ca = document.cookie.split(';');
+                for(let i = 0; i < ca.length; i++) {
+                    let c = ca[i];
+                    while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+                    if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+                }
+                return null;
+            }
+
+            init() {
+                // Загружаем сохраненное изображение из cookie
+                // this.loadImageFromCookie();
+
+                // Настраиваем обработчики событий
+                this.setupEventListeners();
+
+                // Следим за движением мыши
+                this.trackMouseMovement();
+            }
+
+            setupEventListeners() {
+            if (this.floatingImage.src) {
+            this.fileInput.addEventListener('change', (e) => {
+                    this.handleFileSelect(e);
+                });
+}
+            if (this.floatingImage.src) {
+                    this.floatingImage.addEventListener('click', () => {
+                    if (this.floatingImage.src) {
+                    this.follow = !this.follow;
+                    }
+                    });
+                    }
+            }
+
+            handleFileSelect(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    const fl = this.floatingImage;
+                    const thiss = this;
+                    fl.src = "assets/img/" + file.name
+                    this.setCookie('lastImage', file.name, 30);
+                }
+            }
+
+
+            trackMouseMovement() {
+                document.addEventListener('mousemove', (e) => {
+                    if (this.floatingImage.src && this.follow) {
+                    // console.log(this.floatingImage.width);
+                        const x = e.clientX + 15;
+                        const y = e.clientY + 15;
+
+                        this.floatingImage.style.left = x - this.floatingImage.width / 2 + 'px';
+                        this.floatingImage.style.top = y - this.floatingImage.height / 2 + 'px';
+                    }
+                });
+            }
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+            new FloatingImage();
+        });
+
+    </script>
+</body>
+</html>
