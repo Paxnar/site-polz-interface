@@ -295,6 +295,11 @@ display: flex;
 
 .img-dom img{
     width: 57%;
+    transition: transform 0.3s ease;
+}
+
+.img-dom img:hover {
+transform: scale(1.1);
 }
 
 .more {
