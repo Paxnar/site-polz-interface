@@ -186,7 +186,7 @@ display:flex;
 flex-direction: row;}
 
 .slide-show-image-container span {
-    background: #BA0000ab;
+    background: #aed8e6ab;
     color: #fff;
     position: absolute;
     font-weight: 500;
@@ -240,7 +240,7 @@ overflow-wrap: break-word;
 
 .navv {
 position: absolute;
-top: 206px;
+top: 415px;
 }
 
 .wy-side-scroll {
